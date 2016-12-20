@@ -31,17 +31,17 @@ router.get('/banner', function(req, res, next) {
 });
 
 router.get('/goods', function(req, res, next) {
-	var queryString  = "select * from goods"
-	connect.query(queryString,function(err,rows,fileds){
-		if(err){
-			result.code = 500;
-			result.errorinfo = err;
-			res.json(result);
+	models.Goods.findAll().then(function(goods){
+		if(goods.length>0){
+			result.code == 200;
+			result.data.list = goods
 		}else{
-			result.code = 200;
-			result.data.list = rows;
-			res.json(result);
+			result.code == 200;
+			result.errorinfo = {
+				msg:"查询数据为空",
+			}
 		}
+		res.json(result);
 	})
 });
 
