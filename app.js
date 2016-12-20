@@ -22,8 +22,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', manager);
-app.use('/vuestore', vuestore);
+app.use('/', manager);//为本地管理系统提供的路由
+app.use('/vuestore', vuestore);//为vue-store提供rest服务的路由
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

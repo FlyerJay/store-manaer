@@ -1,34 +1,45 @@
 var express = require('express');
 var router = express.Router();
-var db = require('../modules/db.js');
-var connect = db.connect;
+var models = require("../models");
+//构造返回对象的实体，code默认为200，当有错误时会返回errorinfo，数据中有list时会返回pageinfo
+var result = {
+	code:200,
+	errorinfo:"",
+	data:{
+		list:[],
+	},
+	pageinfo:""
+}
 
-/* GET users listing. */
 router.get('/', function(req, res, next) {
-  	res.send('respond with a resource');
+  	res.send('can not get detail request!');
 });
-router.get('/getBanner', function(req, res, next) {
-	var queryString  = "select * from banner_index"
-	connect.query(queryString,function(err,rows,fileds){
-		if(err){
-			next(err);
+
+router.get('/banner', function(req, res, next) {
+	models.Banner.findAll().then(function(banners){
+		if(banners.length>0){
+			result.code == 200;
+			result.data.list = banners;
 		}else{
-			var result = {};
-			result.code = 200;
-			result.data = rows;
-			res.json(result);
+			result.code == 200;
+			result.errorinfo = {
+				msg:"查询数据为空",
+			}
 		}
+		res.json(result);
 	})
 });
-router.get('/getGoodList', function(req, res, next) {
+
+router.get('/goods', function(req, res, next) {
 	var queryString  = "select * from goods"
 	connect.query(queryString,function(err,rows,fileds){
 		if(err){
-			next(err);
+			result.code = 500;
+			result.errorinfo = err;
+			res.json(result);
 		}else{
-			var result = {};
 			result.code = 200;
-			result.data = rows;
+			result.data.list = rows;
 			res.json(result);
 		}
 	})
