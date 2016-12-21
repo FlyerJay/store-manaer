@@ -18,12 +18,92 @@ router.get('/', function(req, res, next) {
 router.get('/banner', function(req, res, next) {
 	models.Banner.findAll().then(function(banners){
 		if(banners.length>0){
+			result.code = 200;
+			result.data.list = banners;
+		}else{
+			result.code = 200;
+			result.errorinfo = {
+				msg:"查询数据为空",
+			}
+		}
+		res.json(result);
+	})
+});
+
+router.post('/banner', function(req, res, next) {
+	models.Banner.findAll().then(function(banners){
+		if(banners.length>0){
+			result.code = 200;
+			result.data.list = banners;
+		}else{
+			result.code = 200;
+			result.errorinfo = {
+				msg:"新增数据出错",
+			}
+		}
+		res.json(result);
+	})
+});
+
+router.get('/banner/:id', function(req, res, next) {
+	var id = req.params.id;
+	models.Banner.findOne({
+		where:{
+			bannerId:{
+				$eq:id
+			}
+		}
+	}).then(function(banners){
+		if(banners){
+			result.code = 200;
+			result.data = banners;
+		}else{
+			result.code = 200;
+			result.data = ""
+			result.errorinfo = {
+				msg:"未获取到资源",
+			}
+		}
+		res.json(result);
+	})
+});
+
+router.delete('/banner/:id', function(req, res, next) {
+	models.Banner.findOne({
+		where:{
+			bannerId:{
+				$eq:1
+			}
+		}
+	}).then(function(banners){
+		if(banners){
+			result.code == 200;
+			result.data = banners;
+		}else{
+			result.code == 200;
+			result.errorinfo = {
+				msg:"未获取到资源",
+			}
+		}
+		res.json(result);
+	})
+});
+
+router.patch('/banner/:id/update', function(req, res, next) {
+	models.Banner.findOne({
+		where:{
+			bannerId:{
+				$eq:1
+			}
+		}
+	}).then(function(banners){
+		if(banners){
 			result.code == 200;
 			result.data.list = banners;
 		}else{
 			result.code == 200;
 			result.errorinfo = {
-				msg:"查询数据为空",
+				msg:"未获取到资源",
 			}
 		}
 		res.json(result);
