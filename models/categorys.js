@@ -11,6 +11,10 @@ module.exports = (sequelize,DataTypes)=>{
 			type:DataTypes.STRING,
 			allowNull:false
 		}
+	},{
+		freezeTabName:true,
+		tableName:"categorys",
+		timestamps:false
 	})
 	return Categorys;
 }

@@ -125,4 +125,27 @@ router.get('/goods', function(req, res, next) {
 	})
 });
 
+router.get('/goods/:id', function(req, res, next) {
+	var id = req.params.id;
+	models.Goods.findOne({
+		where:{
+			goodId:{
+				$eq:id,
+			},
+		}
+	}).then(function(good){
+		if(good){
+			result.code == 200;
+			result.data = goods
+		}else{
+			result.code = 200;
+			result.data = ""
+			result.errorinfo = {
+				msg:"未获取到资源",
+			}
+		}
+		res.json(result);
+	})
+});
+
 module.exports = router;
